@@ -3,6 +3,13 @@ Copyright Broadcom, Inc. All Rights Reserved.
 SPDX-License-Identifier: APACHE-2.0
 */}}
 
+{{/*
+Return the target Kubernetes version
+*/}}
+{{- define "common.capabilities.kubeVersion" -}}
+{{- default (default .Capabilities.KubeVersion.Version .Values.kubeVersion) ((.Values.global).kubeVersion) -}}
+{{- end -}}
+
 {{- if (include "opensearch.master.enabled" .) }}
 apiVersion: v1
 kind: Service
@@ -28,4 +35,8 @@ spec:
   {{- $podLabels := include "common.tplvalues.merge" ( dict "values" ( list .Values.master.podLabels .Values.commonLabels ) "context" . ) }}
   selector: {{- include "common.labels.matchLabels" ( dict "customLabels" $podLabels "context" $ ) | nindent 4 }}
     app.kubernetes.io/component: master
+  {{- $kubeVersion := include "common.capabilities.kubeVersion" . -}}
+  {{- if and (not (empty $kubeVersion)) (semverCompare ">=1.31-0" $kubeVersion)-}}
+  trafficDistribution: {{ .Values.master.trafficDistribution }}
+  {{- end -}}
 {{- end }}
