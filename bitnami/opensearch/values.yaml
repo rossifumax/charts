@@ -546,13 +546,14 @@ master:
   ## @param master.servicenameOverride String to fully override opensearch.master.servicename
   ##
   servicenameOverride: ""
+  ## @param master.service.trafficDistribution String Traffic distribution for the master service
+  ## ref: https://kubernetes.io/docs/concepts/services-networking/service/#traffic-distribution
+  ##
+  service:
+    trafficDistribution: "PreferClose"
   ## @param master.annotations [object] Annotations for the master statefulset
   ##
   annotations: {}
-  ## @param master.trafficDistribution String Traffic distribution for the master service
-  ## ref: https://kubernetes.io/docs/concepts/services-networking/service/#traffic-distribution
-  ##
-  trafficDistribution: "PreferClose"
   ## @param master.updateStrategy.type Master-eligible nodes statefulset strategy type
   ## ref: https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/#update-strategies
   ##
@@ -1075,13 +1076,14 @@ data:
   ## @param data.servicenameOverride String to fully override opensearch.data.servicename
   ##
   servicenameOverride: ""
+  ## @param data.service.trafficDistribution String Traffic distribution for the coordinating-only service
+  ## ref: https://kubernetes.io/docs/concepts/services-networking/service/#traffic-distribution
+  ##
+  service:
+    trafficDistribution: "PreferClose"
   ## @param data.annotations [object] Annotations for the data statefulset
   ##
   annotations: {}
-  ## @param data.trafficDistribution String Traffic distribution for the coordinating-only service
-  ## ref: https://kubernetes.io/docs/concepts/services-networking/service/#traffic-distribution
-  ##
-  trafficDistribution: "PreferClose"
   ## @param data.updateStrategy.type Data-only nodes statefulset strategy type
   ## ref: https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/#update-strategies
   ##
@@ -1601,13 +1603,14 @@ coordinating:
   ## @param coordinating.servicenameOverride String to fully override opensearch.coordinating.servicename
   ##
   servicenameOverride: ""
+  ## @param coordinating.service.trafficDistribution String Traffic distribution for the coordinating-only service
+  ## ref: https://kubernetes.io/docs/concepts/services-networking/service/#traffic-distribution
+  ##
+  service:
+    trafficDistribution: "PreferClose"
   ## @param coordinating.annotations [object] Annotations for the coordinating-only statefulset
   ##
   annotations: {}
-  ## @param coordinating.trafficDistribution String Traffic distribution for the coordinating-only service
-  ## ref: https://kubernetes.io/docs/concepts/services-networking/service/#traffic-distribution
-  ##
-  trafficDistribution: "PreferClose"
   ## @param coordinating.updateStrategy.type Coordinating-only nodes statefulset strategy type
   ## ref: https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/#update-strategies
   ##
@@ -2093,10 +2096,6 @@ ingest:
   ## @param ingest.annotations [object] Annotations for the ingest statefulset
   ##
   annotations: {}
-  ## @param ingest.trafficDistribution String Traffic distribution for the ingest service
-  ## ref: https://kubernetes.io/docs/concepts/services-networking/service/#traffic-distribution
-  ##
-  trafficDistribution: "PreferClose"
   ## @param ingest.updateStrategy.type Ingest-only nodes statefulset strategy type
   ## ref: https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/#update-strategies
   ##
@@ -2508,6 +2507,10 @@ ingest:
     ##     timeoutSeconds: 300
     ##
     sessionAffinityConfig: {}
+    ## @param ingest.service.trafficDistribution String Traffic distribution for the ingest service
+    ## ref: https://kubernetes.io/docs/concepts/services-networking/service/#traffic-distribution
+    ##
+    trafficDistribution: "PreferClose"
   ## OpenSearch Ingest-only ingress parameters
   ## ref: http://kubernetes.io/docs/concepts/services-networking/ingress/
   ##

@@ -35,8 +35,7 @@ spec:
   {{- $podLabels := include "common.tplvalues.merge" ( dict "values" ( list .Values.data.podLabels .Values.commonLabels ) "context" . ) }}
   selector: {{- include "common.labels.matchLabels" ( dict "customLabels" $podLabels "context" $ ) | nindent 4 }}
     app.kubernetes.io/component: data
-  {{- $kubeVersion := include "common.capabilities.kubeVersion" . }}
-  {{- if and (not (empty $kubeVersion)) (semverCompare ">=1.31-0" $kubeVersion) }}
-  trafficDistribution: {{ .Values.data.trafficDistribution }}
+  {{- if semverCompare ">=1.31-0" (include "common.capabilities.kubeVersion" .) }}
+  trafficDistribution: {{ .Values.data.service.trafficDistribution }}
   {{- end }}
 {{- end }}
